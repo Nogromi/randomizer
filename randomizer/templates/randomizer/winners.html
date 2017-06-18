@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <a href={% url "list" %}>list</a>
+
+<ul>
+    {% for profile in winners %}
+        <li class="winner ">
+                {{ profile.name }}
+
+            <a class="get_winner" href="{% url 'get_another' %}">change</a>
+
+
+        </li>
+    {% endfor %}
+</ul>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
+<script>
+
+    $(document).ready(function () {
+        $(".get_winner").click(function (e) {
+            e.preventDefault();
+{#            console.log(this);#}
+            var $this = $(this);
+            $.get(this.href).done(function (data) {
+                if (data.status === 'success') {
+
+                    {# TODO: add change name#}
+                    console.log(data.name);
+
+                }
+
+            })
+        })
+    });
+</script>
+</body>
+
+</html>

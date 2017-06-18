@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    {% for profile in profiles %}
+        <li>
+            {{ profile.name }}
+            <a class="delete" href="{% url 'delete' name=profile.name %}">delete profile</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href={% url "new" %}>add names</a>
+{% if profiles %}
+    <a href={% url "winners" %}>get winners</a>
+{% endif %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
+<script>
+
+    $(document).ready(function () {
+        $(".delete").click(function (e) {
+            e.preventDefault();
+            console.log(this);
+            var $this = $(this);
+            $.get(this.href).done(function (data) {
+                if (data.status === 'success') {
+                    $this.parent().remove();
+                }
+            })
+        })
+    });
+</script>
+</body>
+</html>

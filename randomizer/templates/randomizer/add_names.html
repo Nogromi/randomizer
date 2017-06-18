@@ -1,0 +1,45 @@
+{% load staticfiles %}
+    <a href={% url "list" %}>list</a>
+
+{% if messages %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+
+
+    {{ profile_formset.management_form }}
+
+    {% for form in profile_formset %}
+        <div class="formset">
+            {{ form.name }}
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                    {{ error|escape }}
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    {% if form.non_form_errors %}
+        {% for error in form.non_form_errors %}
+            {{ error|escape }}
+        {% endfor %}
+    {% endif %}
+
+    <input type="submit" value="Submit" class=" button"/>
+</form>
+
+<!-- Include formset plugin - including jQuery dependency -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="{% static 'jquery.formset.js' %}"></script>
+<script>
+    $('.formset').formset({
+        addText: 'add form',
+        deleteText: 'remove'
+    });
+</script>
