@@ -10,7 +10,9 @@
 <ul>
     {% for profile in winners %}
         <li class="winner ">
-                {{ profile.name }}
+                <span>
+                      {{ profile.name }}
+                </span>
 
             <a class="get_winner" href="{% url 'get_another' %}">change</a>
 
@@ -29,12 +31,9 @@
 {#            console.log(this);#}
             var $this = $(this);
             $.get(this.href).done(function (data) {
-                if (data.status === 'success') {
-
-                    {# TODO: add change name#}
+                    $this.parent().children('span').html(data.name);
                     console.log(data.name);
 
-                }
 
             })
         })

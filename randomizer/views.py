@@ -77,6 +77,5 @@ def get_winners(request):
 def get_another(request):
     random_profile = Profile.objects.random()
     return JsonResponse({
-        'status': 'success',
         'name': random_profile.name
     })
